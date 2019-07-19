@@ -35,3 +35,14 @@ This directory contains files related with all submodules for this project (3th 
 
 #### utils ####
 This directory contains all libraries, common headers ... which means this directory contains code which can be used by any other component.
+
+## Build System ##
+To build applications type **make**
+
+To build and run tests type **make test**
+
+To build and run full regressions tests type **make regression**
+
+To remove all object and exec files type **make clean**
+
+To collect more informations about build system type **make help**
