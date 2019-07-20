@@ -10,6 +10,9 @@ This project is compatible only with Linux.
 + **inc** - directory for component header files (.h)
 + **src** - directory for component source files (.c)
 + **test** - directory for component tests files (.c)
+    + **unit** - directory for unit tests (single function) [criterion]
+    + **functional** - directory for functional tests (part of system) [criterion]
+    + **e2e** - directory for end to end tests (whole binary file) [shell]
 + **app** - directory for main file (.c) if component should be built as app (.out)
 
 #### arch ####
