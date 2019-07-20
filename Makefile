@@ -9,6 +9,7 @@
 # all[D=1]   - make all applications when D == 1 then target will be build in Debug mode
 # memcheck   - make memcheck using valgrind for all tests
 # regression - make clean + test + memcheck
+# setup      - install tools
 # Makefile supports Verbose mode, put V=1 after target name to set verbose mode
 
 export
@@ -152,6 +153,11 @@ clean:
 .PHONY:regression
 regression: clean all test memcheck
 
+.PHONY:setup
+setup:
+	$(call print_info,"Setting env")
+	$(Q)$(DIR_SCRIPTS)/setup.sh
+
 .PHONY:help
 help:
 	@echo "Main Makefile"
@@ -162,5 +168,6 @@ help:
 	@echo "    test              - make static tests"
 	@echo "    memcheck          - make mem check using valgrind for tests"
 	@echo "    regression        - regression tests use it before commit to master"
+	@echo "    setup             - setup env"
 	@echo -e
 	@echo "Makefile supports Verbose mode when V=1"
