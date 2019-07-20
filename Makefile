@@ -41,21 +41,25 @@ CC_WARNINGS := -Wall -Wextra -pedantic -Wcast-align \
                -Wnested-externs -Wconversion -Wunreachable-code
 
 CC_FLAGS      := $(CC_STD) $(CC_WARNINGS) -Werror $(CC_OPT) $(CC_SYM)
-CC_TEST_FLAGS := $(CC_STD) $(CC_WARNINGS) -Werror $(CC_OPT) $(CC_SYM)
+CC_TEST_FLAGS := $(CC_STD) -Wall -Wextra -pedantic $(CC_OPT) $(CC_SYM)
 
 PROJECT_DIR := $(shell pwd)
 
 # Global directories
 
-DIR_ARCH        := $(PROJECT_DIR)/arch
-DIR_INTERPRETER := $(PROJECT_DIR)/interpreter
-DIR_PARSER      := $(PROJECT_DIR)/parser
-DIR_SIMULATOR   := $(PROJECT_DIR)/simulator
-DIR_UTILS       := $(PROJECT_DIR)/utils
+DIR_ARCH          := $(PROJECT_DIR)/arch
+DIR_INTERPRETER   := $(PROJECT_DIR)/interpreter
+DIR_PARSER        := $(PROJECT_DIR)/parser
+DIR_SIMULATOR     := $(PROJECT_DIR)/simulator
+DIR_UTILS         := $(PROJECT_DIR)/utils
 
-DIR_SCRIPTS     := $(PROJECT_DIR)/scripts
+DIR_SCRIPTS       := $(PROJECT_DIR)/scripts
+DIR_SUBMODULES    := $(PROJECT_DIR)/submodules
+DIR_EXTERNAL      := $(PROJECT_DIR)/external
 
-DIR_SUBMODULES  := $(PROJECT_DIR)/submodules
+DIR_CRITERION     := $(DIR_EXTERNAL)/criterion
+DIR_CRITERION_LIB := $(DIR_CRITERION)/
+DIR_CRITERION_INC := $(DIR_CRITERION)/include
 
 # Verbose mode
 ifeq ("$(origin V)", "command line")
