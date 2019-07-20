@@ -53,3 +53,10 @@ if [ $is_debian -eq 1 ]; then
 else
     echo "Linux distribution: $distro is not supoorted"
 fi
+
+# Init submodules
+git submodule init
+git submodule update
+
+# Install valgrind from submodule
+${dir}/install_valgrind.sh 2>&1 >/dev/null || error "Valgrind"

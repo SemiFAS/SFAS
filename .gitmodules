@@ -1,0 +1,3 @@
+[submodule "submodules/valgrind"]
+	path = submodules/valgrind
+	url = git://sourceware.org/git/valgrind.git
