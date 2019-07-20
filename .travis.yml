@@ -1,0 +1,12 @@
+language: C
+
+matrix:
+  include:
+  - os: linux
+    dist: trusty
+  - os: linux
+    dist: bionic 
+
+before_install: sudo apt-get update -y
+
+script: make regression

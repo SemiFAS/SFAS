@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/SemiFAS/SFAS.svg?branch=master)](https://travis-ci.org/SemiFAS/SFAS)
+
 # SFAS
 Semi Functional Architecture Simulator
 
