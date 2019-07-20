@@ -7,11 +7,11 @@ test:
 
 
 .PHONY:memcheck
-memcheck: test
+memcheck:
 
 
 .PHONY:run
-run: test
+run:
 
 
 .PHONY:clean

@@ -99,20 +99,15 @@ define print_bin
 endef
 
 .PHONY: all
-all: submodules interpreter simulator
-
-.PHONY: submodules
-submodules:
-	$(call print_make,$@)
-	$(Q)$(MAKE) -f $(DIR_SUBMODULES)/Makefile --no-print-directory
+all: setup interpreter simulator
 
 .PHONY:interpreter
-interpreter: submodules
+interpreter:
 	$(call print_make,$@)
 	$(Q)$(MAKE) -f $(DIR_INTERPRETER)/Makefile --no-print-directory
 
 .PHONY:simulator
-simulator: submodules
+simulator:
 	$(call print_make,$@)
 	$(Q)$(MAKE) -f $(DIR_SIMULATOR)/Makefile --no-print-directory
 

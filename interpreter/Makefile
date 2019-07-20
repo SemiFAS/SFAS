@@ -17,7 +17,7 @@ _INC := $(wildcard $(_DIR_SRC)/*.h)
 _T_UNIT_SRC := $(wildcard $(_DIR_UNIT)/*.c)
 
 _AOBJ := $(_SRC:%.c=%.o) $(_APP:%.c=%.o)
-_T_UNIT_OBJ := $(_T_UNIT_SRC:%_test.c=%.o) $(_SRC:%_test.c=%.o)
+_T_UNIT_OBJ := $(_T_UNIT_SRC:%.c=%_test.o) $(_SRC:%.c=%_test.o)
 
 %.o: %.c $(_INC)
 	$(call print_cc,$<)
@@ -44,12 +44,12 @@ test: $(_T_UNIT_SRC) $(_INC) $(_T_UNIT_OBJ)
 
 
 .PHONY:memcheck
-memcheck: test
+memcheck:
 
 
 .PHONY:run
-run: test
-	$(_TEXC)
+run:
+	$(Q)$(_TEXC)
 
 
 .PHONY:clean
@@ -57,3 +57,4 @@ clean:
 	$(Q)$(RM) $(_AOBJ)
 	$(Q)$(RM) $(_EXC)
 	$(Q)$(RM) $(_TEXC)
+	$(Q)$(RM) $(_T_UNIT_OBJ)
