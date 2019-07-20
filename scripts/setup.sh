@@ -36,7 +36,7 @@ dir=`dirname "${script_path}"`
 # import logger
 source $dir/script_logger.sh
 
-TOOLS=("gcc" "make" "gawk" "bc" "sed" "automake" "autoconf")
+TOOLS=("gcc" "g++" "make" "gawk" "bc" "sed" "automake" "autoconf" "flex" "bison")
 
 is_debian=`is_debian_based $distro`
 
