@@ -47,19 +47,24 @@ PROJECT_DIR := $(shell pwd)
 
 # Global directories
 
-DIR_ARCH          := $(PROJECT_DIR)/arch
-DIR_INTERPRETER   := $(PROJECT_DIR)/interpreter
-DIR_PARSER        := $(PROJECT_DIR)/parser
-DIR_SIMULATOR     := $(PROJECT_DIR)/simulator
-DIR_UTILS         := $(PROJECT_DIR)/utils
+DIR_ARCH           := $(PROJECT_DIR)/arch
+DIR_INTERPRETER    := $(PROJECT_DIR)/interpreter
+DIR_PARSER         := $(PROJECT_DIR)/parser
+DIR_SIMULATOR      := $(PROJECT_DIR)/simulator
+DIR_UTILS          := $(PROJECT_DIR)/utils
 
-DIR_SCRIPTS       := $(PROJECT_DIR)/scripts
-DIR_SUBMODULES    := $(PROJECT_DIR)/submodules
-DIR_EXTERNAL      := $(PROJECT_DIR)/external
+DIR_SCRIPTS        := $(PROJECT_DIR)/scripts
+DIR_SUBMODULES     := $(PROJECT_DIR)/submodules
+DIR_EXTERNAL       := $(PROJECT_DIR)/external
 
-DIR_CRITERION     := $(DIR_EXTERNAL)/criterion
-DIR_CRITERION_LIB := $(DIR_CRITERION)/
-DIR_CRITERION_INC := $(DIR_CRITERION)/include
+DIR_CRITERION      := $(DIR_EXTERNAL)/criterion
+DIR_CRITERION_LIB  := $(DIR_CRITERION)/
+DIR_CRITERION_INC  := $(DIR_CRITERION)/include
+
+DIR_GNULIB         := $(DIR_EXTERNAL)/gnulib
+DIR_GNULIB_LIB     := $(DIR_GNULIB)/lib/x86_64-linux-gnu
+DIR_GNULIB_INC     := $(DIR_GNULIB)/include/glib-2.0
+DIR_GNULIB_LIB_INC := $(DIR_GNULIB_LIB)/glib-2.0/include
 
 # Verbose mode
 ifeq ("$(origin V)", "command line")
@@ -155,7 +160,7 @@ regression: clean all test memcheck
 .PHONY:setup
 setup:
 	$(call print_info,"Setting env")
-	$(Q)$(DIR_SCRIPTS)/setup.sh
+	$(Q)env -i HOME=${HOME} bash -l -c '$(DIR_SCRIPTS)/setup.sh'
 
 .PHONY:help
 help:

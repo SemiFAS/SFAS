@@ -5,8 +5,8 @@ matrix:
   - os: linux
     dist: trusty
   - os: linux
-    dist: bionic 
+    dist: bionic
 
-before_install: sudo apt-get update -y
+before_install: sudo apt-get update -y && sudo apt-get upgrade
 
 script: make regression

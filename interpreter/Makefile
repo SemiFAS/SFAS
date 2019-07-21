@@ -1,5 +1,5 @@
 _EXC := interpreter.out
-_LIB :=
+_LIB := -lglib-2.0
 
 _TEXC := $(DIR_INTERPRETER)/test.out
 
@@ -21,7 +21,7 @@ _T_UNIT_OBJ := $(_T_UNIT_SRC:%.c=%_test.o) $(_SRC:%.c=%_test.o)
 
 %.o: %.c $(_INC)
 	$(call print_cc,$<)
-	$(Q)$(CC) $(CC_FLAGS) -I $(_DIR_INC) -c $< -o $@
+	$(Q)$(CC) $(CC_FLAGS) -I $(_DIR_INC) -I $(DIR_GNULIB_INC) -I $(DIR_GNULIB_LIB_INC) -c $< -o $@
 
 %_test.o: %.c $(_INC)
 	$(call print_cc,$<)
@@ -34,7 +34,7 @@ all: $(_EXC)
 .PHONY:$(_EXC)
 $(_EXC): $(_SRC) $(_APP) $(_INC) $(_AOBJ)
 	$(call print_bin,$@)
-	$(Q)$(CC) $(CC_FLAGS) -I$(_DIR_INC) $(_AOBJ) $(_LIB) -o $@
+	$(Q)$(CC) $(CC_FLAGS) -I $(_DIR_INC) -I $(DIR_GNULIB_INC) -I $(DIR_GNULIB_LIB_INC) -L $(DIR_GNULIB_LIB) $(_AOBJ) $(_LIB) -Wl,-rpath=$(DIR_GNULIB_LIB) -o $@
 
 
 .PHONY:test

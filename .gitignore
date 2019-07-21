@@ -53,3 +53,6 @@ dkms.conf
 
 # Installed 3th part software
 external/
+
+# VS CODE
+.vscode/

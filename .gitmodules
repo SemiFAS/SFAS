@@ -4,3 +4,6 @@
 [submodule "submodules/Criterion"]
 	path = submodules/Criterion
 	url = https://github.com/Snaipe/Criterion
+[submodule "submodules/glib"]
+	path = submodules/glib
+	url = https://github.com/GNOME/glib.git
