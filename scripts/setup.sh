@@ -36,7 +36,7 @@ dir=`dirname "${script_path}"`
 # import logger
 source $dir/script_logger.sh
 
-TOOLS=("gcc" "g++" "make" "cmake" "gawk" "bc" "sed" "wget" "curl" "python3" "automake" "autoconf" "pkg-config" "flex" "bison" "ninja-build" "libmount-dev")
+TOOLS=("gcc" "g++" "make" "cmake" "gawk" "bc" "sed" "wget" "curl" "python3" "automake" "autoconf" "pkg-config" "flex" "bison" "ninja-build" "libmount-dev" "valgrind")
 
 is_debian=`is_debian_based $distro`
 
@@ -75,12 +75,6 @@ fi
 # Init submodules
 git submodule init
 git submodule update
-
-# Install valgrind from submodule
-if [ ! -d ${dir}/../external/valgrind ]; then
-    info "Installing Valgrind ..."
-    (${dir}/install_valgrind.sh >/dev/null 2>&1 && success "Valgrind Installed") || error "Valgrind"
-fi
 
 # Install Criterion from submodule
 if [ ! -d ${dir}/../external/criterion ]; then
