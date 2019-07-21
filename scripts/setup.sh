@@ -50,6 +50,22 @@ if [ $is_debian -eq 1 ]; then
             success "${TOOLS[i]} Installed"
         fi
     done
+
+    # We need gcc 8 or greater
+    gcc_ver="$(gcc -dumpversion)"
+    gcc_need_ver=8
+    if [ $gcc_ver -lt $gcc_need_ver ]; then
+        info "Installing gcc 8 ..."
+        sudo apt-get update >/dev/null 2>&1
+        sudo apt-get install build-essential software-properties-common -y >/dev/null 2>&1
+        sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y >/dev/null 2>&1
+        sudo apt-get update >/dev/null 2>&1
+        sudo apt-get install gcc-snapshot -y >/dev/null 2>&1 || error "gcc 8"
+        sudo apt-get update >/dev/null 2>&1
+        sudo apt-get install gcc-8 g++-8 -y >/dev/null 2>&1 || error "gcc 8"
+        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 60 --slave /usr/bin/g++ g++ /usr/bin/g++-8 >/dev/null 2>&1
+        success "gcc 8 Installed"
+    fi
 else
     echo "Linux distribution: $distro is not supoorted"
 fi
