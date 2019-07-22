@@ -8,3 +8,6 @@ matrix:
 before_install: sudo apt-get update -y && sudo apt-get upgrade
 
 script: make regression
+
+notifications:
+  email: false
