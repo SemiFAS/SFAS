@@ -25,20 +25,34 @@ BC   := bc
 GREP := grep -q
 AWK  := awk
 
-# Compiler setting
+# Analyzer settings
+ANALYZER         := clang --analyze
+ANALYZER_FLAGS   := --analyzer-output text
 
-CC          := gcc
+SCAN_BUILD       := scan-build >/dev/null
+SCAN_BUILD_FLAGS := --status-bugs --keep-cc --show-description
+
+# Compiler settings
+CC          ?= clang
 
 CC_STD      := -std=c99
 CC_OPT      := -O3
-CC_SYM      := -rdynamic
 CC_WARNINGS := -Wall -Wextra -pedantic -Wcast-align \
-               -Winit-self -Wlogical-op -Wmissing-include-dirs \
+               -Winit-self -Wmissing-include-dirs \
                -Wredundant-decls -Wshadow -Wstrict-overflow=5 -Wundef  \
                -Wwrite-strings -Wpointer-arith -Wmissing-declarations \
                -Wuninitialized -Wold-style-definition -Wstrict-prototypes \
                -Wmissing-prototypes -Wswitch-default -Wbad-function-cast \
-               -Wnested-externs -Wconversion -Wunreachable-code
+               -Wnested-externs -Wconversion -Wunreachable-code \
+
+
+ifeq ($(CC),gcc)
+CC_SYM      := -rdynamic
+else ifeq ($(CC),clang)
+CC_SYM      := -Wl,--export-dynamic
+CC_WARNINGS += -Wgnu -Weverything -Wno-unused-command-line-argument -Wno-newline-eof -Wno-reserved-id-macro \
+               -Wno-documentation -Wno-documentation-unknown-command -Wno-padded
+endif
 
 CC_FLAGS      := $(CC_STD) $(CC_WARNINGS) -Werror $(CC_OPT) $(CC_SYM)
 CC_TEST_FLAGS := $(CC_STD) -Wall -Wextra -pedantic $(CC_OPT) $(CC_SYM)
@@ -97,6 +111,10 @@ endef
 
 define print_cc
     $(if $(Q), @echo "[CC]          $$(1)")
+endef
+
+define print_analyze
+    $(if $(Q), @echo "[ANALYZE]     $$(1)")
 endef
 
 define print_bin

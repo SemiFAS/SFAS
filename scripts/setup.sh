@@ -36,7 +36,10 @@ dir=`dirname "${script_path}"`
 # import logger
 source $dir/script_logger.sh
 
-TOOLS=("gcc" "g++" "make" "cmake" "gawk" "bc" "sed" "wget" "curl" "python3" "automake" "autoconf" "pkg-config" "flex" "bison" "ninja-build" "libmount-dev" "valgrind")
+TOOLS=("gcc" "g++" "clang" "make" "cmake"
+       "gawk" "bc" "sed" "wget" "curl"
+       "python3" "automake" "autoconf" "pkg-config" "flex"
+       "bison" "ninja-build" "libmount-dev" "valgrind" "clang-tools")
 
 is_debian=`is_debian_based $distro`
 
@@ -63,8 +66,22 @@ if [ $is_debian -eq 1 ]; then
         sudo apt-get install gcc-snapshot -y >/dev/null 2>&1 || error "gcc 8"
         sudo apt-get update >/dev/null 2>&1
         sudo apt-get install gcc-8 g++-8 -y >/dev/null 2>&1 || error "gcc 8"
-        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 60 --slave /usr/bin/g++ g++ /usr/bin/g++-8 >/dev/null 2>&1
+        sudo update-alternatives --install `which gcc` gcc `which gcc-8` 60 --slave `which g++` g++ `which g++-8` >/dev/null 2>&1
         success "gcc 8 Installed"
+    fi
+
+    # We need clang 8 or greater
+    clang_ver="$(clang --version | head -n 1 | grep -o "[[:digit:]]\." | head -n 1 | tr -d '.')"
+    clang_need_ver=8
+    if [ $clang_ver -lt $clang_need_ver ]; then
+        info "Installing clang 8 ..."
+        wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key 2>/dev/null | sudo apt-key add - >/dev/null 2>&1
+        sudo add-apt-repository "deb http://apt.llvm.org/bionic/ llvm-toolchain-bionic-8 main" >/dev/null 2>&1
+        sudo apt-get update >/dev/null 2>&1
+        sudo apt-get -y install clang-8 >/dev/null 2>&1 || error "clang 8"
+        sudo update-alternatives --install `which clang` clang `which clang-8` 100 >/dev/null 2>&1
+        sudo update-alternatives --install `which clang++ ` clang++ `which clang++-8` 100 >/dev/null 2>&1
+        success "clang 8 Installed"
     fi
 else
     echo "Linux distribution: $distro is not supoorted"
