@@ -16,14 +16,15 @@ export
 
 # Shell
 
-MV   := mv
-RM   := rm -rf
-CP   := cp 2>/dev/null
-AR   := ar rcs
-WC   := wc
-BC   := bc
-GREP := grep -q
-AWK  := awk
+MV    := mv
+RM    := rm -rf
+CP    := cp 2>/dev/null
+AR    := ar rcs
+WC    := wc
+BC    := bc
+GREP  := grep -q
+AWK   := awk
+MKDIR := mkdir -p
 
 # Analyzer settings
 ANALYZER         := clang --analyze
@@ -56,6 +57,14 @@ endif
 
 CC_FLAGS      := $(CC_STD) $(CC_WARNINGS) -Werror $(CC_OPT) $(CC_SYM)
 CC_TEST_FLAGS := $(CC_STD) -Wall -Wextra -pedantic $(CC_OPT) $(CC_SYM)
+
+# LEX settings
+LEX       := flex
+LEX_FLAGS := -F --yylineno
+
+# YACC settings
+YACC       := bison
+YACC_FLAGS :=
 
 PROJECT_DIR := $(shell pwd)
 
@@ -121,16 +130,33 @@ define print_bin
     $(if $(Q), @echo "[BIN]         $$(1)")
 endef
 
+define print_ar
+    $(if $(Q), @echo "[AR]          $$(1)")
+endef
+
+define print_lex
+    $(if $(Q), @echo "[LEX]         $$(1)")
+endef
+
+define print_yacc
+    $(if $(Q), @echo "[YACC]        $$(1)")
+endef
+
 .PHONY: all
 all: setup interpreter simulator
 
+.PHONY:parser
+parser:
+	$(call print_make,$@)
+	$(Q)$(MAKE) -f $(DIR_PARSER)/Makefile --no-print-directory
+
 .PHONY:interpreter
-interpreter:
+interpreter: parser
 	$(call print_make,$@)
 	$(Q)$(MAKE) -f $(DIR_INTERPRETER)/Makefile --no-print-directory
 
 .PHONY:simulator
-simulator:
+simulator: parser
 	$(call print_make,$@)
 	$(Q)$(MAKE) -f $(DIR_SIMULATOR)/Makefile --no-print-directory
 

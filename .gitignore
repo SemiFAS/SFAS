@@ -56,3 +56,9 @@ external/
 
 # VS CODE
 .vscode/
+
+# LEX output
+*_lex.*
+
+# YACC output
+*_yacc.*
