@@ -4,6 +4,10 @@ matrix:
   include:
   - os: linux
     dist: bionic
+    compiler: gcc
+  - os: linux
+    dist: bionic
+    compiler: clang
 
 before_install: sudo apt-get update -y && sudo apt-get upgrade
 
